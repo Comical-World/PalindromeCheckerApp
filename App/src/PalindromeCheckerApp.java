@@ -1,6 +1,5 @@
 import java.util.Scanner;
-import java.util.Stack;
-import java.util.Queue;
+import java.util.Deque;
 import java.util.LinkedList;
 
 public class PalindromeCheckerApp {
@@ -9,38 +8,35 @@ public class PalindromeCheckerApp {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("=== UC6: Queue + Stack Based Palindrome Checker ===");
+        System.out.println("=== UC7: Deque-Based Optimized Palindrome Checker ===");
         System.out.print("Enter a string: ");
         String input = scanner.nextLine();
 
         // Convert to lowercase for case-insensitive comparison
         input = input.toLowerCase();
 
-        // Create Stack (LIFO) and Queue (FIFO)
-        Stack<Character> stack = new Stack<>();
-        Queue<Character> queue = new LinkedList<>();
+        // Create Deque
+        Deque<Character> deque = new LinkedList<>();
 
-        // Insert characters into both data structures
+        // Insert characters into deque
         for (int i = 0; i < input.length(); i++) {
-            char ch = input.charAt(i);
-            stack.push(ch);     // LIFO
-            queue.add(ch);      // FIFO (Enqueue)
+            deque.addLast(input.charAt(i));
         }
 
         boolean isPalindrome = true;
 
-        // Compare Dequeue (FIFO) with Pop (LIFO)
-        while (!stack.isEmpty()) {
-            char fromStack = stack.pop();        // Pop
-            char fromQueue = queue.remove();    // Dequeue
+        // Compare front and rear elements
+        while (deque.size() > 1) {
+            char front = deque.removeFirst();
+            char rear = deque.removeLast();
 
-            if (fromStack != fromQueue) {
+            if (front != rear) {
                 isPalindrome = false;
                 break;
             }
         }
 
-        // Print Result
+        // Print result
         if (isPalindrome) {
             System.out.println("Result: The given string is a Palindrome.");
         } else {
