@@ -1,6 +1,4 @@
 import java.util.Scanner;
-import java.util.Deque;
-import java.util.LinkedList;
 
 public class PalindromeCheckerApp {
 
@@ -8,35 +6,12 @@ public class PalindromeCheckerApp {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("=== UC7: Deque-Based Optimized Palindrome Checker ===");
+        System.out.println("=== UC9: Recursive Palindrome Checker ===");
         System.out.print("Enter a string: ");
-        String input = scanner.nextLine();
+        String input = scanner.nextLine().toLowerCase();
 
-        // Convert to lowercase for case-insensitive comparison
-        input = input.toLowerCase();
+        boolean isPalindrome = checkPalindrome(input, 0, input.length() - 1);
 
-        // Create Deque
-        Deque<Character> deque = new LinkedList<>();
-
-        // Insert characters into deque
-        for (int i = 0; i < input.length(); i++) {
-            deque.addLast(input.charAt(i));
-        }
-
-        boolean isPalindrome = true;
-
-        // Compare front and rear elements
-        while (deque.size() > 1) {
-            char front = deque.removeFirst();
-            char rear = deque.removeLast();
-
-            if (front != rear) {
-                isPalindrome = false;
-                break;
-            }
-        }
-
-        // Print result
         if (isPalindrome) {
             System.out.println("Result: The given string is a Palindrome.");
         } else {
@@ -44,5 +19,22 @@ public class PalindromeCheckerApp {
         }
 
         scanner.close();
+    }
+
+    // Recursive method
+    public static boolean checkPalindrome(String str, int start, int end) {
+
+        // Base Condition: If pointers cross or meet
+        if (start >= end) {
+            return true;
+        }
+
+        // If characters don't match
+        if (str.charAt(start) != str.charAt(end)) {
+            return false;
+        }
+
+        // Recursive call moving inward
+        return checkPalindrome(str, start + 1, end - 1);
     }
 }
