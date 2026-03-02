@@ -1,1 +1,2 @@
-# PalindromeCheckerApp
+# PalindromeCheckerApp 
+// running project
