@@ -1,23 +1,18 @@
 import java.util.Scanner;
 import java.util.Stack;
 
-// Palindrome service class (Encapsulation)
-class PalindromeChecker {
+public class PalindromeCheckerApp {
 
-    // Method to check if the given string is a palindrome
-    public boolean checkPalindrome(String input) {
+    // Stack-based palindrome check
+    public static boolean stackPalindrome(String input) {
 
-        // Normalize string: remove spaces and convert to lowercase
         String normalized = input.replaceAll("\\s+", "").toLowerCase();
-
         Stack<Character> stack = new Stack<>();
 
-        // Push characters into stack
         for (char c : normalized.toCharArray()) {
             stack.push(c);
         }
 
-        // Compare characters while popping
         for (char c : normalized.toCharArray()) {
             if (c != stack.pop()) {
                 return false;
@@ -26,9 +21,24 @@ class PalindromeChecker {
 
         return true;
     }
-}
 
-public class PalindromeCheckerApp {
+    // Two-pointer palindrome check
+    public static boolean twoPointerPalindrome(String input) {
+
+        String normalized = input.replaceAll("\\s+", "").toLowerCase();
+        int left = 0;
+        int right = normalized.length() - 1;
+
+        while (left < right) {
+            if (normalized.charAt(left) != normalized.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+
+        return true;
+    }
 
     public static void main(String[] args) {
 
@@ -37,16 +47,23 @@ public class PalindromeCheckerApp {
         System.out.println("Enter a string to check palindrome:");
         String input = scanner.nextLine();
 
-        // Create object of PalindromeChecker
-        PalindromeChecker checker = new PalindromeChecker();
+        // Measure Stack algorithm time
+        long startStack = System.nanoTime();
+        boolean stackResult = stackPalindrome(input);
+        long endStack = System.nanoTime();
+        long stackTime = endStack - startStack;
 
-        boolean result = checker.checkPalindrome(input);
+        // Measure Two-pointer algorithm time
+        long startTwoPointer = System.nanoTime();
+        boolean pointerResult = twoPointerPalindrome(input);
+        long endTwoPointer = System.nanoTime();
+        long pointerTime = endTwoPointer - startTwoPointer;
 
-        if (result) {
-            System.out.println("The given string is a palindrome.");
-        } else {
-            System.out.println("The given string is NOT a palindrome.");
-        }
+        System.out.println("\nStack Algorithm Result: " + stackResult);
+        System.out.println("Stack Execution Time: " + stackTime + " ns");
+
+        System.out.println("\nTwo-Pointer Algorithm Result: " + pointerResult);
+        System.out.println("Two-Pointer Execution Time: " + pointerTime + " ns");
 
         scanner.close();
     }
