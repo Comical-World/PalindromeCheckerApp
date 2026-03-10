@@ -1,30 +1,34 @@
 import java.util.Scanner;
+import java.util.Stack;
 
-public class PalindromeCheckerApp {
+// Palindrome service class (Encapsulation)
+class PalindromeChecker {
 
-    // Method to check palindrome ignoring spaces and case
-    public static boolean isPalindrome(String input) {
+    // Method to check if the given string is a palindrome
+    public boolean checkPalindrome(String input) {
 
-        // Normalize the string: remove spaces and convert to lowercase
+        // Normalize string: remove spaces and convert to lowercase
         String normalized = input.replaceAll("\\s+", "").toLowerCase();
 
-        // Convert string to char array
-        char[] arr = normalized.toCharArray();
+        Stack<Character> stack = new Stack<>();
 
-        int left = 0;
-        int right = arr.length - 1;
+        // Push characters into stack
+        for (char c : normalized.toCharArray()) {
+            stack.push(c);
+        }
 
-        // Compare characters from both ends
-        while (left < right) {
-            if (arr[left] != arr[right]) {
+        // Compare characters while popping
+        for (char c : normalized.toCharArray()) {
+            if (c != stack.pop()) {
                 return false;
             }
-            left++;
-            right--;
         }
 
         return true;
     }
+}
+
+public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
@@ -33,8 +37,13 @@ public class PalindromeCheckerApp {
         System.out.println("Enter a string to check palindrome:");
         String input = scanner.nextLine();
 
-        if (isPalindrome(input)) {
-            System.out.println("The given string is a palindrome (ignoring spaces and case).");
+        // Create object of PalindromeChecker
+        PalindromeChecker checker = new PalindromeChecker();
+
+        boolean result = checker.checkPalindrome(input);
+
+        if (result) {
+            System.out.println("The given string is a palindrome.");
         } else {
             System.out.println("The given string is NOT a palindrome.");
         }
