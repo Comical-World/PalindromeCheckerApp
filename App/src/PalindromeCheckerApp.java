@@ -13,7 +13,10 @@ class StackStrategy implements PalindromeStrategy {
 
 =======
 import java.util.Scanner;
+ UC9-Recursive
+=======
 import java.util.Stack;
+ main
 
 public class PalindromeCheckerApp {
 
@@ -119,6 +122,34 @@ public class PalindromeCheckerApp {
 
         Scanner scanner = new Scanner(System.in);
 
+ UC9-Recursive
+        System.out.println("=== UC9: Recursive Palindrome Checker ===");
+        System.out.print("Enter a string: ");
+        String input = scanner.nextLine().toLowerCase();
+
+        boolean isPalindrome = checkPalindrome(input, 0, input.length() - 1);
+
+        if (isPalindrome) {
+            System.out.println("Result: The given string is a Palindrome.");
+        } else {
+            System.out.println("Result: The given string is NOT a Palindrome.");
+        }
+
+        scanner.close();
+    }
+
+    // Recursive method
+    public static boolean checkPalindrome(String str, int start, int end) {
+
+        // Base Condition: If pointers cross or meet
+        if (start >= end) {
+            return true;
+        }
+
+        // If characters don't match
+        if (str.charAt(start) != str.charAt(end)) {
+            return false;
+=======
         System.out.println("Enter a string to check palindrome:");
         String input = scanner.nextLine();
 
@@ -170,9 +201,11 @@ public class PalindromeCheckerApp {
             System.out.println("The given string is a palindrome.");
         } else {
             System.out.println("The given string is NOT a palindrome.");
+ main
         }
  main
 
-        scanner.close();
+        // Recursive call moving inward
+        return checkPalindrome(str, start + 1, end - 1);
     }
 }
